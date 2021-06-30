@@ -3,11 +3,11 @@ import constants from './data/constants.js'
 // TASK 0- Motivate demoing a small makeImage component
 //  that takes an { imgURL } and returns an img element.
 //  Then loop over these URLs making images as you go:
-const imageData = [
-  { imageURL: 'https://images.dog.ceo/breeds/mastiff-tibetan/n02108551_978.jpg' },
-  { imageURL: 'https://images.dog.ceo/breeds/mastiff-bull/n02108422_3398.jpg' },
-  { imageURL: 'https://images.dog.ceo/breeds/mastiff-bull/n02108422_2947.jpg' },
-]
+// const imageData = [
+//   { imageURL: 'https://images.dog.ceo/breeds/mastiff-tibetan/n02108551_978.jpg' },
+//   { imageURL: 'https://images.dog.ceo/breeds/mastiff-bull/n02108422_3398.jpg' },
+//   { imageURL: 'https://images.dog.ceo/breeds/mastiff-bull/n02108422_2947.jpg' },
+// ]
 // function imageMaker(imageURL){
 //   const img = document.createElement('img');
 //   img.src = imageURL;
@@ -23,7 +23,7 @@ const imageData = [
 //  On the other hand, the default export from data/constants.js
 //  Destructure `open` and `close` from the constants
 const { open, close } = constants;
-const { title, content } = panelData;
+// const { title, content } = panelData;
 // TASK 2- Verify our imports using log statements
 console.log(panelData) // log the panelData
 console.log(open) // log the open arrow
@@ -31,14 +31,9 @@ console.log(close) // log the close arrow
 // TASK 3- Comment out the div.panel from index.html and grab its parent element.
 //  We will generate the panel with code, and we'll need the parent
 //  so we can append the code-generated panel to the DOM.
-const title
-
 const accordion = document.querySelector('.accordion');
-
 // TASK 4- Create a function 'makePanel' that creates a panel exactly as you see it in the HTML.
 function makePanel(title, content){
-  // return title, content;
-// }
 // TASK 5- Instantiate all the elements needed for a panel
 const panel = document.createElement('div');
 const panelBar = document.createElement('div');
@@ -68,31 +63,38 @@ panelButtons.append(closeButton);
 panel.append(panelContent);
   // TASK 7- Add proper class names to our elements (See index.html for reference)
   // paying attention to the elements that need to start out hidden
-panel.classList.add ('panel');
-panelBar.classList.add ('panel-bar');
-panelButtons.classList.add ('panel-buttons');
-openButton.classList.add ('panel-btn-open');
-closeButton.classList.add ('panel-btn-close');
-closeButton.classList.add ('hide-btn');
-panelContent.classList.add  ('panel-content');
-panelContent.classList.add  ('toggle-on');
-console.log(panel);
-
-
+panel.classList.add('panel');
+panelBar.classList.add('panel-bar');
+panelButtons.classList.add('panel-buttons');
+openButton.classList.add('panel-btn-open');
+closeButton.classList.add('panel-btn-close', 'hide-btn');
+panelContent.classList.add('panel-content');
   // TASK 8- Set text content using arguments as raw material
   //  and also using the open and close arrows imported at the top of the file
+panelTitle.textContent = title;
+panelContent.textContent = content;
+openButton.textContent = open;
+closeButton.textContent = close;
   // TASK 9- When the 'open' or 'close' buttons are clicked, the content is toggled on/off:
   //  - the open button needs to go away (the 'hide-btn' class name controls this)
   //  - the close button needs to show (the 'hide-btn' class name controls this)
   //  - the contents need to show (the 'toggle-on' class name controls this)
+panelButtons.addEventListener('click', () => {
+  openButton.classList.toggle('hide-btn');
+  closeButton.classList.toggle('hide-btn');
+  panelContent.classList.toggle('toggle-on');
+});
   // don't forget to return the panel!
-  return panel
+  return panel;
 }
-
-makePanel();
+console.log(makePanel('the title', 'the content'));
 // TASK 10- Loop through the panelData we imported from the data folder
 //  creating panels for each content and title and append them to the DOM.
 //  We can do this with a single forEach, or with a map and a forEach.
+panelData.forEach(e => {
+  const panel = makePanel(e.title, e.content);
+  accordion.append(panel);
+});
 // [STRETCH] Comment out the links inside the nav and
 // write a linkMaker that takes { href, className, text }
 // and returns an anchor tag with the right href, class and textContent.
